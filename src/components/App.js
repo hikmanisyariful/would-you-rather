@@ -1,33 +1,31 @@
 import React, { Component } from "react";
-import * as API from "../utils/api";
+import { connect } from "react-redux";
+import { handleInitialData } from "../actions/shared";
 
 class App extends Component {
-  state = {
-    users: [],
-    questions: []
-  };
-
   componentDidMount() {
-    API.getInitialData().then(({ users, questions }) => {
-      this.setState(() => ({
-        users: users,
-        questions: questions
-      }));
-    });
+    this.props.dispatch(handleInitialData());
   }
 
   render() {
-    const { users, questions } = this.state;
     return (
       <div>
         <h1>Would You Rather?</h1>
         <h2>USERS</h2>
-        {JSON.stringify(users)}
+        {JSON.stringify(this.props.users)}
 
         <h2>QUESTIONS</h2>
-        {JSON.stringify(questions)}
+        {JSON.stringify(this.props.questions)}
       </div>
     );
   }
 }
-export default App;
+
+function mapStateToProps({ users, questions }) {
+  return {
+    users,
+    questions
+  };
+}
+
+export default connect(mapStateToProps)(App);
