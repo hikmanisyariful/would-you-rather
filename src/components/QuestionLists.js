@@ -1,23 +1,71 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Menu } from "semantic-ui-react";
+import styled from "styled-components";
+
+import ListCard from "./ListCard";
 
 class QuestionLists extends Component {
+  state = {
+    activeItem: "unanswered"
+  };
+
+  handleItemClick = (e, { name }) => {
+    console.log(name);
+    this.setState({ activeItem: name });
+  };
+
   render() {
+    const { activeItem } = this.state;
+
     return (
-      <div>
-        <h1>Question Lists</h1>
-        <h1>AUTHED USER</h1>
-        <h3>{this.props.authedUser}</h3>
-        <h1>USER</h1>
-        {JSON.stringify(this.props.user)}
-        <h1>UNASWERED QUESTIONS</h1>
-        {JSON.stringify(this.props.unasweredQuestions)}
-        <h1>ANSWERED QUESTIONS</h1>
-        {JSON.stringify(this.props.answeredQuestions)}
-      </div>
+      <QuestionsContainer>
+        <Menu fluid widths={2} size="large">
+          <Menu.Item
+            name="unanswered"
+            active={activeItem === "unanswered"}
+            onClick={this.handleItemClick}
+            color="teal"
+          >
+            Unanswered Questions
+          </Menu.Item>
+          <Menu.Item
+            name="answered"
+            active={activeItem === "answered"}
+            onClick={this.handleItemClick}
+            color="teal"
+          >
+            Answered Questions
+          </Menu.Item>
+        </Menu>
+        {activeItem === "unanswered" ? (
+          <Lists>
+            {this.props.unansweredQuestions.map(question => (
+              <ListCard key={question.id} question={question} />
+            ))}
+          </Lists>
+        ) : (
+          <Lists>
+            {this.props.answeredQuestions.map(question => (
+              <ListCard key={question.id} question={question} />
+            ))}
+          </Lists>
+        )}
+      </QuestionsContainer>
     );
   }
 }
+
+const QuestionsContainer = styled.div`
+  width: 500px;
+  border: solid;
+  border-width: 2px;
+`;
+
+const Lists = styled.div`
+  width: 500px;
+  padding: 10px;
+`;
 
 function mapStateToProps({ authedUser, questions, users }) {
   let user = {};
@@ -49,14 +97,14 @@ function mapStateToProps({ authedUser, questions, users }) {
     newQuestionsArr.push(questionsArr[i][1]);
   }
 
-  const unasweredQuestions = newQuestionsArr.filter(el => {
+  const unansweredQuestions = newQuestionsArr.filter(el => {
     return answeredQuestions.indexOf(el) === -1;
   });
 
   return {
     authedUser,
     user,
-    unasweredQuestions,
+    unansweredQuestions,
     answeredQuestions
   };
 }
