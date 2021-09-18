@@ -4,7 +4,6 @@ import logo from "../logo.svg";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
 import { Redirect } from "react-router-dom";
-
 import { Dropdown, Button, Header } from "semantic-ui-react";
 
 class Login extends Component {

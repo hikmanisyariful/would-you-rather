@@ -12,7 +12,6 @@
     "react-router": "^5.2.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
-    "react-ui-dropdown": "^0.3.4",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
     "semantic-ui-css": "^2.4.1",
