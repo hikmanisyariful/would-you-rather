@@ -104,7 +104,10 @@ function mapStateToProps({ authedUser, questions, users }) {
   return {
     authedUser,
     user,
-    unansweredQuestions,
+    unansweredQuestions: unansweredQuestions.sort(
+      (a, b) =>
+        unansweredQuestions[b].timestamp - unansweredQuestions[a].timestamp
+    ),
     answeredQuestions
   };
 }
