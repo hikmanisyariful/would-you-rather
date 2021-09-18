@@ -1,21 +1,114 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Menu } from "semantic-ui-react";
+import styled from "styled-components";
+
+import ListCard from "./ListCard";
 
 class QuestionLists extends Component {
+  state = {
+    activeItem: "unanswered"
+  };
+
+  handleItemClick = (e, { name }) => {
+    console.log(name);
+    this.setState({ activeItem: name });
+  };
+
   render() {
+    const { activeItem } = this.state;
+
     return (
-      <div>
-        <h1>Question Lists</h1>
-        <h3>{this.props.authedUser}</h3>
-      </div>
+      <QuestionsContainer>
+        <Menu fluid widths={2} size="large">
+          <Menu.Item
+            name="unanswered"
+            active={activeItem === "unanswered"}
+            onClick={this.handleItemClick}
+            color="teal"
+          >
+            Unanswered Questions
+          </Menu.Item>
+          <Menu.Item
+            name="answered"
+            active={activeItem === "answered"}
+            onClick={this.handleItemClick}
+            color="teal"
+          >
+            Answered Questions
+          </Menu.Item>
+        </Menu>
+        {activeItem === "unanswered" ? (
+          <Lists>
+            {this.props.unansweredQuestions.map(question => (
+              <ListCard key={question.id} question={question} />
+            ))}
+          </Lists>
+        ) : (
+          <Lists>
+            {this.props.answeredQuestions.map(question => (
+              <ListCard key={question.id} question={question} />
+            ))}
+          </Lists>
+        )}
+      </QuestionsContainer>
     );
   }
 }
 
-function mapStateToProps({ authedUser, questions }) {
+const QuestionsContainer = styled.div`
+  width: 500px;
+  border: solid;
+  border-width: 2px;
+`;
+
+const Lists = styled.div`
+  width: 500px;
+  padding: 10px;
+`;
+
+function mapStateToProps({ authedUser, questions, users }) {
+  let user = {};
+
+  Object.keys(users).forEach(key => {
+    if (users[key].id === authedUser) {
+      user = users[key];
+    }
+  });
+
+  let answeredQuestions = [];
+  let answers = user.answers;
+  let count = 0;
+
+  Object.keys(questions).forEach(key => {
+    for (const answer in answers) {
+      console.log(questions[key], answer);
+      if (questions[key].id === answer) {
+        answeredQuestions.push(questions[key]);
+      }
+      count++;
+      console.log(count);
+    }
+  });
+
+  let questionsArr = Object.entries(questions);
+  let newQuestionsArr = [];
+  for (let i = 0; i < questionsArr.length; i++) {
+    newQuestionsArr.push(questionsArr[i][1]);
+  }
+
+  const unansweredQuestions = newQuestionsArr.filter(el => {
+    return answeredQuestions.indexOf(el) === -1;
+  });
+
   return {
     authedUser,
-    questions
+    user,
+    unansweredQuestions: unansweredQuestions.sort(
+      (a, b) =>
+        unansweredQuestions[b].timestamp - unansweredQuestions[a].timestamp
+    ),
+    answeredQuestions
   };
 }
 
