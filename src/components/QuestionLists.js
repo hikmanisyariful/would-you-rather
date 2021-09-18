@@ -5,7 +5,7 @@ class QuestionLists extends Component {
   render() {
     return (
       <div>
-        <h1>{QuestionLists}</h1>
+        <h1>Question Lists</h1>
         <h3>{this.props.authedUser}</h3>
       </div>
     );
