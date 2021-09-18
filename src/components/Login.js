@@ -4,7 +4,9 @@ import logo from "../logo.svg";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
 import { Redirect } from "react-router-dom";
-import ReactUIDropdown from "react-ui-dropdown";
+
+import { Dropdown } from "semantic-ui-react";
+import "semantic-ui-less/semantic.less";
 
 class Login extends Component {
   state = {
@@ -31,10 +33,6 @@ class Login extends Component {
     }
   };
 
-  handleDropdownChange = selectedItems => {
-    console.log(selectedItems);
-  };
-
   render() {
     const { users } = this.props;
     const { toLogin } = this.state;
@@ -45,17 +43,30 @@ class Login extends Component {
       </option>
     ));
 
-    const data = [
-      {
-        id: 100,
-        title: "Centaur",
-        image: "https://d30y9cdsu7xlg0.cloudfront.net/png/120146-200.png"
-      }
-    ];
-
     if (toLogin === true) {
       return <Redirect to="/questions" />;
     }
+
+    const friendOptions = [
+      {
+        key: "Jenny Hess",
+        text: "Jenny Hess",
+        value: "Jenny Hess",
+        image: {
+          avatar: true,
+          src: "https://react.semantic-ui.com/images/avatar/small/jenny.jpg"
+        }
+      },
+      {
+        key: "Elliot Fu",
+        text: "Elliot Fu",
+        value: "Elliot Fu",
+        image: {
+          avatar: true,
+          src: "https://react.semantic-ui.com/images/avatar/small/elliot.jpg"
+        }
+      }
+    ];
 
     return (
       <LoginContainer>
@@ -72,16 +83,24 @@ class Login extends Component {
             <Select onChange={this.handleChange}>{userOptions}</Select>
             <Button type="submit">Submit</Button>
           </form>
-          <ReactUIDropdown
-            label="Myth animals"
-            initialItems={data}
-            onChange={this.handleDropdownChange}
-          />
+          <DropdownWrap>
+            <Dropdown
+              placeholder="Select Friend"
+              fluid
+              selection
+              options={friendOptions}
+            />
+          </DropdownWrap>
         </FormSelect>
       </LoginContainer>
     );
   }
 }
+
+const DropdownWrap = styled.div`
+  width: 500px;
+  background: pink;
+`;
 
 const LoginContainer = styled.div`
   width: 700px;
