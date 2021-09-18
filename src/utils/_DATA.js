@@ -2,7 +2,7 @@ let users = {
   sarahedo: {
     id: "sarahedo",
     name: "Sarah Edo",
-    avatarURL: `https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?cs=srgb&dl=pexels-andrea-piacquadio-774909.jpg&fm=jpg`,
+    avatarURL: `https://react.semantic-ui.com/images/avatar/small/jenny.jpg`,
     answers: {
       "8xf0y6ziyjabvozdd253nd": "optionOne",
       "6ni6ok3ym7mf1p33lnez": "optionTwo",
@@ -14,7 +14,7 @@ let users = {
   tylermcginnis: {
     id: "tylermcginnis",
     name: "Tyler McGinnis",
-    avatarURL: `https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?cs=srgb&dl=pexels-mohamed-abdelghaffar-771742.jpg&fm=jpg`,
+    avatarURL: `https://react.semantic-ui.com/images/avatar/small/elliot.jpg`,
     answers: {
       vthrdm985a262al8qx3do: "optionOne",
       xj352vofupe1dqz9emx13r: "optionTwo"
@@ -24,7 +24,7 @@ let users = {
   johndoe: {
     id: "johndoe",
     name: "John Doe",
-    avatarURL: `https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg`,
+    avatarURL: `https://react.semantic-ui.com/images/avatar/small/matt.jpg`,
     answers: {
       xj352vofupe1dqz9emx13r: "optionOne",
       vthrdm985a262al8qx3do: "optionTwo",
