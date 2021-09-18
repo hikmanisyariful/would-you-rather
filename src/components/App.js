@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { handleInitialData } from "../actions/shared";
+import Login from "./Login";
+import QuestionLists from "./QuestionLists";
+import styled from "styled-components";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class App extends Component {
   componentDidMount() {
@@ -9,17 +13,25 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Would You Rather?</h1>
-        <h2>USERS</h2>
-        {JSON.stringify(this.props.users)}
-
-        <h2>QUESTIONS</h2>
-        {JSON.stringify(this.props.questions)}
-      </div>
+      <Router>
+        <Container>
+          <Route path="/" exact>
+            <Login />
+          </Route>
+          <Route path="/questions">
+            <QuestionLists />
+          </Route>
+        </Container>
+      </Router>
     );
   }
 }
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 function mapStateToProps({ users, questions }) {
   return {
