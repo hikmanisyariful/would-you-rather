@@ -12,7 +12,7 @@ class ListCard extends Component {
         <Card.Content extra>
           <Grid columns={2} divided>
             <Grid.Row>
-              <Grid.Column width={4}>
+              <Grid.Column width={4} textAlign="center" verticalAlign="middle">
                 <Image src={this.props.user.avatarURL} size="tiny" circular />
               </Grid.Column>
               <Grid.Column width={12}>
