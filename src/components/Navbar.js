@@ -10,7 +10,6 @@ class Navbar extends Component {
   };
 
   handleItemClick = (e, { name }) => {
-    console.log(name);
     this.setState({ activeItem: name });
 
     if (name === "Logout") {

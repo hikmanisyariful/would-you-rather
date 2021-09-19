@@ -78,16 +78,12 @@ function mapStateToProps({ authedUser, questions, users }) {
 
   let answeredQuestions = [];
   let answers = user.answers;
-  let count = 0;
 
   Object.keys(questions).forEach(key => {
     for (const answer in answers) {
-      console.log(questions[key], answer);
       if (questions[key].id === answer) {
         answeredQuestions.push(questions[key]);
       }
-      count++;
-      console.log(count);
     }
   });
 
