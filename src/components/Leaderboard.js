@@ -1,11 +1,20 @@
-import React from "react";
+import React, { Component } from "react";
+import styled from "styled-components";
+import LeaderBoardCard from "./LeaderBoardCard";
 
-const Leaderboard = () => {
-  return (
-    <div>
-      <h1>Leaderboard</h1>
-    </div>
-  );
-};
+class Leaderboard extends Component {
+  render() {
+    return (
+      <Container>
+        <LeaderBoardCard />
+      </Container>
+    );
+  }
+}
+
+const Container = styled.div`
+  width: 500px;
+  background: pink;
+`;
 
 export default Leaderboard;
