@@ -1,14 +1,21 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, Segment } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
+import { setAuthedUser } from "../actions/authedUser";
 
 class Navbar extends Component {
-  state = { activeItem: "Home" };
+  state = {
+    activeItem: "Home"
+  };
 
   handleItemClick = (e, { name }) => {
     console.log(name);
     this.setState({ activeItem: name });
+
+    if (name === "Logout") {
+      this.props.dispatch(setAuthedUser(null));
+    }
   };
 
   render() {
@@ -20,31 +27,44 @@ class Navbar extends Component {
           name="Home"
           active={activeItem === "Home"}
           onClick={this.handleItemClick}
+          as={NavLink}
+          to="/questions"
         />
         <Menu.Item
           name="New Question"
           active={activeItem === "New Question"}
           onClick={this.handleItemClick}
+          as={NavLink}
+          to="/add"
         />
         <Menu.Item
           name="Leader Board"
           active={activeItem === "Leader Board"}
           onClick={this.handleItemClick}
+          as={NavLink}
+          to="/leaderboard"
         />
-        <Menu.Menu position="right">
-          <Menu.Item
-            name="logout"
-            active={activeItem === "logout"}
-            onClick={this.handleItemClick}
-          />
-        </Menu.Menu>
+        {this.props.authedUser !== null && (
+          <Menu.Menu position="right">
+            <Menu.Item
+              name="Logout"
+              active={activeItem === "Logout"}
+              onClick={this.handleItemClick}
+              as={NavLink}
+              exact
+              to="/"
+            />
+          </Menu.Menu>
+        )}
       </Menu>
     );
   }
 }
 
-function mapStateToProps(state, props) {
-  return {};
+function mapStateToProps({ authedUser }, props) {
+  return {
+    authedUser
+  };
 }
 
 export default connect(mapStateToProps)(Navbar);

@@ -6,6 +6,8 @@ import QuestionLists from "./QuestionLists";
 import styled from "styled-components";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navbar from "./Navbar";
+import AddQuestion from "./AddQuestion";
+import Leaderboard from "./Leaderboard";
 
 class App extends Component {
   componentDidMount() {
@@ -22,6 +24,12 @@ class App extends Component {
           </Route>
           <Route path="/questions">
             <QuestionLists />
+          </Route>
+          <Route path="/add">
+            <AddQuestion />
+          </Route>
+          <Route path="/leaderboard">
+            <Leaderboard />
           </Route>
         </Container>
       </Router>
