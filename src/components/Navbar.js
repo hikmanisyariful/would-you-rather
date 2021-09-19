@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu } from "semantic-ui-react";
+import { Menu, Image } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
 
@@ -19,6 +19,7 @@ class Navbar extends Component {
 
   render() {
     const { activeItem } = this.state;
+    const { user } = this.props;
 
     return (
       <Menu pointing secondary fluid size="huge" color="teal">
@@ -45,6 +46,8 @@ class Navbar extends Component {
         />
         {this.props.authedUser !== null && (
           <Menu.Menu position="right">
+            <Menu.Item name={user.name} />
+            <Image src={user.avatarURL} avatar />
             <Menu.Item
               name="Logout"
               active={activeItem === "Logout"}
@@ -60,9 +63,16 @@ class Navbar extends Component {
   }
 }
 
-function mapStateToProps({ authedUser }, props) {
+function mapStateToProps({ authedUser, users }, props) {
+  let user = {};
+  Object.keys(users).forEach(key => {
+    if (users[key].id === authedUser) {
+      user = users[key];
+    }
+  });
   return {
-    authedUser
+    authedUser,
+    user
   };
 }
 

@@ -28,13 +28,11 @@ export function voteQuestion(answer) {
 export function handleAddQuestion(optionOne, optionTwo) {
   return (dispatch, getState) => {
     const { authedUser } = getState();
-    console.log("INI INPUT", optionOne, optionTwo);
     return API.saveQuestion({
       author: authedUser,
       optionOneText: optionOne,
       optionTwoText: optionTwo
     }).then(question => {
-      console.log("DI ACTION", question);
       dispatch(addQuestion(question));
     });
   };
