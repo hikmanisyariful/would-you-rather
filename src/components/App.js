@@ -5,6 +5,9 @@ import Login from "./Login";
 import QuestionLists from "./QuestionLists";
 import styled from "styled-components";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import Navbar from "./Navbar";
+import AddQuestion from "./AddQuestion";
+import Leaderboard from "./Leaderboard";
 
 class App extends Component {
   componentDidMount() {
@@ -15,11 +18,18 @@ class App extends Component {
     return (
       <Router>
         <Container>
+          <Navbar />
           <Route path="/" exact>
             <Login />
           </Route>
           <Route path="/questions">
             <QuestionLists />
+          </Route>
+          <Route path="/add">
+            <AddQuestion />
+          </Route>
+          <Route path="/leaderboard">
+            <Leaderboard />
           </Route>
         </Container>
       </Router>
@@ -28,7 +38,9 @@ class App extends Component {
 }
 
 const Container = styled.div`
+  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 30px;
