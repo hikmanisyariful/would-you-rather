@@ -9,17 +9,17 @@ import Navbar from "./Navbar";
 import AddQuestion from "./AddQuestion";
 import Leaderboard from "./Leaderboard";
 
-function PrivateRoute({ component: Component, authedUser, ...rest }) {
+function PrivateRoute({ children, authedUser, ...rest }) {
   return (
     <Route
       {...rest}
-      render={props =>
-        authedUser !== null ? (
-          <Component {...props} />
+      render={({ location }) => {
+        return authedUser !== null ? (
+          children
         ) : (
-          <Redirect to={{ pathname: "/", state: { from: props.location } }} />
-        )
-      }
+          <Redirect to={{ pathname: "/", state: { from: location } }} />
+        );
+      }}
     />
   );
 }
@@ -37,21 +37,15 @@ class App extends Component {
           <Route path="/" exact>
             <Login />
           </Route>
-          <PrivateRoute
-            authedUser={this.props.authedUser}
-            path="/questions"
-            component={QuestionLists}
-          />
-          <PrivateRoute
-            authedUser={this.props.authedUser}
-            path="/add"
-            component={AddQuestion}
-          />
-          <PrivateRoute
-            authedUser={this.props.authedUser}
-            path="/leaderboard"
-            component={Leaderboard}
-          />
+          <PrivateRoute authedUser={this.props.authedUser} path="/questions">
+            <QuestionLists />
+          </PrivateRoute>
+          <PrivateRoute authedUser={this.props.authedUser} path="/add">
+            <AddQuestion />
+          </PrivateRoute>
+          <PrivateRoute authedUser={this.props.authedUser} path="/leaderboard">
+            <Leaderboard />
+          </PrivateRoute>
         </Container>
       </Router>
     );

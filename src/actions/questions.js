@@ -1,4 +1,5 @@
 import * as API from "../utils/api";
+import { updateUserQuestions } from "./users";
 
 export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
 export const ADD_QUESTION = "ADD_QUESTION";
@@ -33,7 +34,9 @@ export function handleAddQuestion(optionOne, optionTwo) {
       optionOneText: optionOne,
       optionTwoText: optionTwo
     }).then(question => {
+      console.log(question);
       dispatch(addQuestion(question));
+      dispatch(updateUserQuestions(question));
     });
   };
 }
