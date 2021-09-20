@@ -10,24 +10,23 @@ import {
   Label
 } from "semantic-ui-react";
 
-const LeaderBoardCard = () => {
+const LeaderBoardCard = props => {
+  const { user } = props;
   return (
     <Card fluid>
       <Card.Content>
         <Grid columns={3} divided>
           <Grid.Row centered>
             <Grid.Column width={4} textAlign="center" verticalAlign="middle">
-              <Image
-                src="https://react.semantic-ui.com/images/avatar/small/jenny.jpg"
-                fluid
-                circular
-              />
+              <Image src={user.avatarURL} fluid circular />
             </Grid.Column>
             <Grid.Column width={8}>
-              <Header as="h2">User Name</Header>
+              <Header as="h2">{user.name}</Header>
               <p>Answered Questions</p>
+              <p>{user.answeredQuestions}</p>
               <Divider />
               <p>Created Question</p>
+              <p>{user.createdQuestions}</p>
             </Grid.Column>
             <Grid.Column width={4} textAlign="center" verticalAlign="middle">
               <Card>
@@ -36,7 +35,7 @@ const LeaderBoardCard = () => {
                 </Card.Content>
                 <Card.Content>
                   <Label circular size="massive" color="teal">
-                    10
+                    {user.score}
                   </Label>
                 </Card.Content>
               </Card>
