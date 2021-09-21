@@ -1,25 +1,23 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import {
-  Card,
-  Header,
-  Grid,
-  Image,
-  Form,
-  Radio,
-  Button,
-  Progress
-} from "semantic-ui-react";
+import { Card, Header, Grid, Image } from "semantic-ui-react";
 import { connect } from "react-redux";
+import PollingQuestion from "./PollingQuestion";
+import PollingResult from "./PollingResult";
+import { withRouter } from "react-router";
 
 class Polling extends Component {
   render() {
+    const { haveAnswer, user, question } = this.props;
     return (
       <Container>
         <Card fluid>
           <Card.Content style={{ background: "#D3D3D3" }}>
-            <Header as="h3">USER NAME ASKS :</Header>
-            <p>{JSON.stringify(this.props.question_id)}</p>
+            {haveAnswer === false ? (
+              <Header as="h3">{user.name} asks :</Header>
+            ) : (
+              <Header as="h3">Asked by {user.name}</Header>
+            )}
           </Card.Content>
           <Card.Content>
             <Grid columns={2} divided>
@@ -35,65 +33,12 @@ class Polling extends Component {
                     circular
                   />
                 </Grid.Column>
-                <Grid.Column width={11}>
-                  <Header as="h2" textAlign="center">
-                    Would You Rather
-                  </Header>
-                  <Form>
-                    <Form.Field>
-                      <Radio
-                        label="Question Option One"
-                        name="radioGroup"
-                        value="this"
-                        // checked={this.state.value === "this"}
-                        // onChange={this.handleChange}
-                      />
-                    </Form.Field>
-                    <Form.Field>
-                      <Radio
-                        label="Question Option Two"
-                        name="radioGroup"
-                        value="this"
-                        // checked={this.state.value === "this"}
-                        // onChange={this.handleChange}
-                      />
-                    </Form.Field>
-                    <Button color="teal" fluid>
-                      Submit
-                    </Button>
-                  </Form>
 
-                  <Header textAlign="center" as="h2">
-                    Result
-                  </Header>
-                  <Card fluid>
-                    <Card.Content>
-                      <Header as="h5">
-                        Would you rather be option one front-end decveloper ?
-                      </Header>
-                      <Progress percent={50} color="teal" progress />
-                      <Card.Description textAlign="center">
-                        <strong>1 out of 2 votes</strong>
-                      </Card.Description>
-                    </Card.Content>
-                  </Card>
-                  <Card fluid>
-                    <Card.Content
-                      style={{ background: "rgb(64,224,208, 0.3)" }}
-                    >
-                      <div className="ui teal top right ribbon label">
-                        Your Vote
-                      </div>
-                      <Header as="h5">
-                        Would you rather be option two front-end decveloper ?
-                      </Header>
-                      <Progress percent={50} color="teal" progress />
-                      <Card.Description textAlign="center">
-                        <strong>1 out of 2 votes</strong>
-                      </Card.Description>
-                    </Card.Content>
-                  </Card>
-                </Grid.Column>
+                {haveAnswer === false ? (
+                  <PollingQuestion user={user} question={question} />
+                ) : (
+                  <PollingResult user={user} question={question} />
+                )}
               </Grid.Row>
             </Grid>
           </Card.Content>
@@ -109,10 +54,44 @@ const Container = styled.div`
 `;
 
 function mapStateToProps({ authedUser, questions, users }, props) {
-  const { question_id } = props.match.params;
+  const question_id = "vthrdm985a262al8qx3do";
+  // const question_id = "8xf0y6ziyjabvozdd253nd";
+  // const question_id = props.match.params;
+  let haveAnswer = false;
+
+  let user;
+  Object.keys(users).forEach(key => {
+    if (users[key].id === authedUser) {
+      user = users[key];
+    }
+  });
+
+  let question;
+  Object.keys(questions).forEach(key => {
+    if (question_id === key) {
+      question = questions[key];
+    }
+  });
+
+  console.log("INI AUTHED USER", authedUser);
+  console.log("INI USER", user);
+  console.log("INI QUESTION", question);
+
+  let userAnswers = user.answers;
+
+  Object.keys(userAnswers).forEach(key => {
+    console.log(key, question_id);
+    if (key === question_id) {
+      haveAnswer = true;
+    }
+  });
+
   return {
-    question_id
+    question_id,
+    user,
+    question,
+    haveAnswer
   };
 }
 
-export default connect(mapStateToProps)(Polling);
+export default withRouter(connect(mapStateToProps)(Polling));
