@@ -14,7 +14,6 @@ const Login = () => {
   const users = useSelector(state => state.users);
 
   const handleChange = (event, data) => {
-    console.log(data.value);
     setValue(data.value);
   };
 

@@ -9,9 +9,8 @@ import { withRouter } from "react-router";
 class Polling extends Component {
   render() {
     const { haveAnswer, user, question } = this.props;
-    const { question_id } = this.props.match.params;
+    // const { question_id } = this.props.match.params;
 
-    console.log("INI QUESTION ID", question_id);
     return (
       <Container>
         <Card fluid>

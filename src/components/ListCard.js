@@ -10,7 +10,6 @@ class ListCard extends Component {
   };
 
   handleOnClick = (e, question_id) => {
-    console.log("INI QUESTION ID", question_id);
     e.preventDefault();
     this.props.history.push(`/questions/${question_id}`);
     this.setState(() => ({
