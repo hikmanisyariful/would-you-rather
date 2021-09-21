@@ -38,7 +38,17 @@ class App extends Component {
           <Route path="/" exact>
             <Login />
           </Route>
-          <PrivateRoute authedUser={this.props.authedUser} path="/questions">
+          <PrivateRoute
+            exact
+            authedUser={this.props.authedUser}
+            path="/questions"
+          >
+            <QuestionLists />
+          </PrivateRoute>
+          <PrivateRoute
+            authedUser={this.props.authedUser}
+            path="/questions/:question_id"
+          >
             <Polling />
           </PrivateRoute>
           <PrivateRoute authedUser={this.props.authedUser} path="/add">

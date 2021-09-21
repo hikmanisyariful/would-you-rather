@@ -1,9 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Card, Image, Grid } from "semantic-ui-react";
+import { Redirect, withRouter } from "react-router-dom";
 
 class ListCard extends Component {
+  state = {
+    toPolling: false
+  };
+
+  handleOnClick = (e, question_id) => {
+    console.log("INI QUESTION ID", question_id);
+    e.preventDefault();
+    this.props.history.push(`/questions/${question_id}`);
+    this.setState(() => ({
+      toPolling: true
+    }));
+  };
+
   render() {
+    if (this.state.toPolling === true) {
+      return <Redirect to={`/questions/${this.props.question.id}`} />;
+    }
+
     return (
       <Card fluid>
         <Card.Content color="grey">
@@ -18,7 +36,12 @@ class ListCard extends Component {
               <Grid.Column width={12}>
                 <h3 style={{ color: "#000" }}>Would You Rather</h3>
                 <p>..{this.props.question.optionOne.text}..</p>
-                <Button basic color="teal" fluid>
+                <Button
+                  basic
+                  color="teal"
+                  fluid
+                  onClick={e => this.handleOnClick(e, this.props.question.id)}
+                >
                   View Poll
                 </Button>
               </Grid.Column>
@@ -47,4 +70,4 @@ function mapStateToProps({ users }, props) {
   };
 }
 
-export default connect(mapStateToProps)(ListCard);
+export default withRouter(connect(mapStateToProps)(ListCard));

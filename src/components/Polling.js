@@ -10,6 +10,7 @@ import {
   Button,
   Progress
 } from "semantic-ui-react";
+import { connect } from "react-redux";
 
 class Polling extends Component {
   render() {
@@ -18,6 +19,7 @@ class Polling extends Component {
         <Card fluid>
           <Card.Content style={{ background: "#D3D3D3" }}>
             <Header as="h3">USER NAME ASKS :</Header>
+            <p>{JSON.stringify(this.props.question_id)}</p>
           </Card.Content>
           <Card.Content>
             <Grid columns={2} divided>
@@ -77,7 +79,6 @@ class Polling extends Component {
                   </Card>
                   <Card fluid>
                     <Card.Content
-                      fluid
                       style={{ background: "rgb(64,224,208, 0.3)" }}
                     >
                       <div className="ui teal top right ribbon label">
@@ -107,4 +108,11 @@ const Container = styled.div`
   background: "pink";
 `;
 
-export default Polling;
+function mapStateToProps(state, props) {
+  const { question_id } = props.match.params;
+  return {
+    question_id
+  };
+}
+
+export default connect(mapStateToProps)(Polling);
