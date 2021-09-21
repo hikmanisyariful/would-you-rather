@@ -11,7 +11,6 @@ class QuestionLists extends Component {
   };
 
   handleItemClick = (e, { name }) => {
-    console.log(name);
     this.setState({ activeItem: name });
   };
 
