@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Navbar from "./Navbar";
 import AddQuestion from "./AddQuestion";
 import Leaderboard from "./Leaderboard";
+import Polling from "./Polling";
 
 function PrivateRoute({ children, authedUser, ...rest }) {
   return (
@@ -38,7 +39,7 @@ class App extends Component {
             <Login />
           </Route>
           <PrivateRoute authedUser={this.props.authedUser} path="/questions">
-            <QuestionLists />
+            <Polling />
           </PrivateRoute>
           <PrivateRoute authedUser={this.props.authedUser} path="/add">
             <AddQuestion />
