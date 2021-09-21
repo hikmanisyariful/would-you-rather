@@ -10,7 +10,7 @@ class PollingQuestion extends Component {
     this.setState({ value });
   };
 
-  handleSubmit = (e, qid, authedUser) => {
+  handleSubmit = (e, qid) => {
     e.preventDefault();
     const answer = this.state.value;
 

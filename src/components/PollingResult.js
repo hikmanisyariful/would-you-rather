@@ -4,15 +4,23 @@ import { connect } from "react-redux";
 
 class PollingResult extends Component {
   render() {
-    const { optionOne, optionTwo } = this.props;
+    const { optionOne, optionTwo, optionAnswer } = this.props;
     return (
       <Grid.Column width={11}>
         <Header textAlign="center" as="h2">
           Result
         </Header>
         <Card fluid>
-          <Card.Content>
-            <Header as="h5">Would you rather {optionOne.text}</Header>
+          <Card.Content
+            style={{
+              background:
+                optionAnswer === "optionOne" ? "rgb(64,224,208, 0.3)" : "none"
+            }}
+          >
+            {optionAnswer === "optionOne" && (
+              <div className="ui yellow top right ribbon label">Your Vote</div>
+            )}
+            <Header as="h4">Would you rather {optionOne.text}</Header>
             <Progress percent={optionOne.percentage} color="teal" progress />
             <Card.Description textAlign="center">
               <strong>
@@ -22,9 +30,17 @@ class PollingResult extends Component {
           </Card.Content>
         </Card>
         <Card fluid color="teal">
-          <Card.Content style={{ background: "rgb(64,224,208, 0.3)" }}>
-            <div className="ui yellow top right ribbon label">Your Vote</div>
-            <Header as="h5">Would you rather {optionTwo.text}</Header>
+          <Card.Content
+            style={{
+              background:
+                optionAnswer === "optionTwo" ? "rgb(64,224,208, 0.3)" : "none"
+            }}
+          >
+            {optionAnswer === "optionTwo" && (
+              <div className="ui yellow top right ribbon label">Your Vote</div>
+            )}
+
+            <Header as="h4">Would you rather {optionTwo.text}</Header>
             <Progress percent={optionTwo.percentage} color="teal" progress />
             <Card.Description textAlign="center">
               <strong>
@@ -38,7 +54,7 @@ class PollingResult extends Component {
   }
 }
 
-function mapStateToProps(state, props) {
+function mapStateToProps({ users, authedUser }, props) {
   const question = props.question;
   const voteOptionOne = question.optionOne.votes.length;
   const voteOptionTwo = question.optionTwo.votes.length;
@@ -60,10 +76,25 @@ function mapStateToProps(state, props) {
     totalVotes
   };
 
+  let userAnswers;
+  Object.keys(users).forEach(key => {
+    if (key === authedUser) {
+      userAnswers = users[key].answers;
+    }
+  });
+
+  let optionAnswer;
+  Object.keys(userAnswers).forEach(key => {
+    if (key === question.id) {
+      optionAnswer = userAnswers[key];
+    }
+  });
+
   return {
     optionOne,
     optionTwo,
-    user: props.user
+    user: props.user,
+    optionAnswer
   };
 }
 
