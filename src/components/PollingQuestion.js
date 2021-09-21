@@ -1,34 +1,34 @@
 import React, { Component } from "react";
 import { Grid, Header, Form, Radio, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
+import { handleVoteQuestion } from "../actions/questions";
 
 class PollingQuestion extends Component {
   state = {};
 
   handleChange = (e, { value }) => {
     this.setState({ value });
-    console.log("INI VALUE", value);
   };
 
   handleSubmit = (e, qid, authedUser) => {
     e.preventDefault();
     const answer = this.state.value;
 
-    // Dispatch handle save question answer
+    // Dispatch handle save question
+    if (!answer) {
+      alert("Please choices your option!");
+    }
+    this.props.dispatch(handleVoteQuestion(qid, answer));
   };
 
   render() {
-    const { user, question } = this.props;
+    const { question } = this.props;
     return (
       <Grid.Column width={11}>
         <Header as="h2" textAlign="center">
           Would You Rather
         </Header>
-        <Form
-          onSubmit={e =>
-            this.handleSubmit(e, question.id, this.props.authedUser)
-          }
-        >
+        <Form onSubmit={e => this.handleSubmit(e, question.id)}>
           <Form.Field>
             <Radio
               label={question.optionOne.text}
@@ -54,12 +54,6 @@ class PollingQuestion extends Component {
       </Grid.Column>
     );
   }
-}
-
-function mapStateToProps({ authedUser }) {
-  return {
-    authedUser
-  };
 }
 
 export default connect()(PollingQuestion);

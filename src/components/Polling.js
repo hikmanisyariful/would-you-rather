@@ -9,6 +9,9 @@ import { withRouter } from "react-router";
 class Polling extends Component {
   render() {
     const { haveAnswer, user, question } = this.props;
+    const { question_id } = this.props.match.params;
+
+    console.log("INI QUESTION ID", question_id);
     return (
       <Container>
         <Card fluid>
@@ -35,7 +38,7 @@ class Polling extends Component {
                 </Grid.Column>
 
                 {haveAnswer === false ? (
-                  <PollingQuestion user={user} question={question} />
+                  <PollingQuestion question={question} />
                 ) : (
                   <PollingResult user={user} question={question} />
                 )}
@@ -54,9 +57,9 @@ const Container = styled.div`
 `;
 
 function mapStateToProps({ authedUser, questions, users }, props) {
-  const question_id = "vthrdm985a262al8qx3do";
-  // const question_id = "8xf0y6ziyjabvozdd253nd";
+  const question_id = "xj352vofupe1dqz9emx13r";
   // const question_id = props.match.params;
+
   let haveAnswer = false;
 
   let user;
@@ -73,14 +76,9 @@ function mapStateToProps({ authedUser, questions, users }, props) {
     }
   });
 
-  console.log("INI AUTHED USER", authedUser);
-  console.log("INI USER", user);
-  console.log("INI QUESTION", question);
-
   let userAnswers = user.answers;
 
   Object.keys(userAnswers).forEach(key => {
-    console.log(key, question_id);
     if (key === question_id) {
       haveAnswer = true;
     }
@@ -94,4 +92,4 @@ function mapStateToProps({ authedUser, questions, users }, props) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(Polling));
+export default connect(mapStateToProps)(withRouter(Polling));

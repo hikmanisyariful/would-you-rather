@@ -12,7 +12,7 @@ class PollingResult extends Component {
         </Header>
         <Card fluid>
           <Card.Content>
-            <Header as="h5">{optionOne.text}</Header>
+            <Header as="h5">Would you rather {optionOne.text}</Header>
             <Progress percent={optionOne.percentage} color="teal" progress />
             <Card.Description textAlign="center">
               <strong>
@@ -23,8 +23,8 @@ class PollingResult extends Component {
         </Card>
         <Card fluid color="teal">
           <Card.Content style={{ background: "rgb(64,224,208, 0.3)" }}>
-            <div className="ui teal top right ribbon label">Your Vote</div>
-            <Header as="h5">{optionTwo.text}</Header>
+            <div className="ui yellow top right ribbon label">Your Vote</div>
+            <Header as="h5">Would you rather {optionTwo.text}</Header>
             <Progress percent={optionTwo.percentage} color="teal" progress />
             <Card.Description textAlign="center">
               <strong>
