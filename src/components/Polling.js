@@ -108,7 +108,7 @@ const Container = styled.div`
   background: "pink";
 `;
 
-function mapStateToProps(state, props) {
+function mapStateToProps({ authedUser, questions, users }, props) {
   const { question_id } = props.match.params;
   return {
     question_id
