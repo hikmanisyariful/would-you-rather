@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Card, Image, Grid } from "semantic-ui-react";
-import { Redirect } from "react-router-dom";
-import { withRouter } from "react-router";
+import { Redirect, withRouter } from "react-router-dom";
+// import { withRouter } from "react-router";
 
 class ListCard extends Component {
   state = {
