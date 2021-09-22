@@ -8,8 +8,40 @@ import { withRouter } from "react-router";
 
 class Polling extends Component {
   render() {
-    const { haveAnswer, user, question } = this.props;
-    // const { question_id } = this.props.match.params;
+    // const { haveAnswer, user, question } = this.props;
+    const { users, questions, authedUser } = this.props;
+
+    const { question_id } = this.props.match.params;
+
+    let question;
+
+    Object.keys(questions).forEach(key => {
+      if (question_id === key) {
+        question = questions[key];
+      }
+    });
+
+    let user;
+    let userQuestion;
+
+    Object.keys(users).forEach(key => {
+      if (users[key].id === authedUser) {
+        user = users[key];
+      }
+      if (key === question.author) {
+        userQuestion = users[key];
+      }
+    });
+
+    let userAnswers = user.answers;
+
+    let haveAnswer = false;
+
+    Object.keys(userAnswers).forEach(key => {
+      if (key === question_id) {
+        haveAnswer = true;
+      }
+    });
 
     return (
       <Container>
@@ -29,11 +61,7 @@ class Polling extends Component {
                   textAlign="center"
                   verticalAlign="middle"
                 >
-                  <Image
-                    src={`https://react.semantic-ui.com/images/avatar/small/matt.jpg`}
-                    size="large"
-                    circular
-                  />
+                  <Image src={userQuestion.avatarURL} size="large" circular />
                 </Grid.Column>
 
                 {haveAnswer === false ? (
@@ -55,39 +83,11 @@ const Container = styled.div`
   background: "pink";
 `;
 
-function mapStateToProps({ authedUser, questions, users }, props) {
-  const question_id = "xj352vofupe1dqz9emx13r";
-  // const question_id = props.match.params;
-
-  let haveAnswer = false;
-
-  let user;
-  Object.keys(users).forEach(key => {
-    if (users[key].id === authedUser) {
-      user = users[key];
-    }
-  });
-
-  let question;
-  Object.keys(questions).forEach(key => {
-    if (question_id === key) {
-      question = questions[key];
-    }
-  });
-
-  let userAnswers = user.answers;
-
-  Object.keys(userAnswers).forEach(key => {
-    if (key === question_id) {
-      haveAnswer = true;
-    }
-  });
-
+function mapStateToProps({ authedUser, questions, users }) {
   return {
-    question_id,
-    user,
-    question,
-    haveAnswer
+    users,
+    questions,
+    authedUser
   };
 }
 
