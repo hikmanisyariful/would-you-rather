@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { handleInitialData } from "../actions/shared";
 import Login from "./Login";
@@ -9,6 +9,7 @@ import Navbar from "./Navbar";
 import AddQuestion from "./AddQuestion";
 import Leaderboard from "./Leaderboard";
 import Polling from "./Polling";
+import LoadingBar from "react-redux-loading";
 
 function PrivateRoute({ children, authedUser, ...rest }) {
   return (
@@ -33,31 +34,37 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Container>
-          <Navbar />
-          <Route path="/" exact>
-            <Login />
-          </Route>
-          <PrivateRoute
-            exact
-            authedUser={this.props.authedUser}
-            path="/questions"
-          >
-            <QuestionLists />
-          </PrivateRoute>
-          <PrivateRoute
-            authedUser={this.props.authedUser}
-            path="/questions/:question_id"
-          >
-            <Polling />
-          </PrivateRoute>
-          <PrivateRoute authedUser={this.props.authedUser} path="/add">
-            <AddQuestion />
-          </PrivateRoute>
-          <PrivateRoute authedUser={this.props.authedUser} path="/leaderboard">
-            <Leaderboard />
-          </PrivateRoute>
-        </Container>
+        <Fragment>
+          <Container>
+            <LoadingBar />
+            <Navbar />
+            <Route path="/" exact>
+              <Login />
+            </Route>
+            <PrivateRoute
+              exact
+              authedUser={this.props.authedUser}
+              path="/questions"
+            >
+              <QuestionLists />
+            </PrivateRoute>
+            <PrivateRoute
+              authedUser={this.props.authedUser}
+              path="/questions/:question_id"
+            >
+              <Polling />
+            </PrivateRoute>
+            <PrivateRoute authedUser={this.props.authedUser} path="/add">
+              <AddQuestion />
+            </PrivateRoute>
+            <PrivateRoute
+              authedUser={this.props.authedUser}
+              path="/leaderboard"
+            >
+              <Leaderboard />
+            </PrivateRoute>
+          </Container>
+        </Fragment>
       </Router>
     );
   }
