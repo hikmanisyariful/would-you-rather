@@ -35,8 +35,8 @@ class App extends Component {
     return (
       <Router>
         <Fragment>
+          <LoadingBar />
           <Container>
-            <LoadingBar />
             <Navbar />
             <Route path="/" exact>
               <Login />
