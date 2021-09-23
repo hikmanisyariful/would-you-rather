@@ -5,13 +5,29 @@ import { connect } from "react-redux";
 import PollingQuestion from "./PollingQuestion";
 import PollingResult from "./PollingResult";
 import { withRouter } from "react-router";
+import NotFound from "./NotFound";
 
 class Polling extends Component {
+  findCurrentQuestion = question_id => {
+    const { questions } = this.props;
+    let isNotFound = true;
+    Object.keys(questions).forEach(key => {
+      if (key === question_id) {
+        isNotFound = false;
+      }
+    });
+
+    return isNotFound;
+  };
+
   render() {
-    // const { haveAnswer, user, question } = this.props;
     const { users, questions, authedUser } = this.props;
 
     const { question_id } = this.props.match.params;
+
+    const isNotFound = this.findCurrentQuestion(question_id);
+
+    if (isNotFound) return <NotFound />;
 
     let question;
 

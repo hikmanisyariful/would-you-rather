@@ -83,13 +83,13 @@ export default Login;
 
 const LoginContainer = styled.div`
   width: 700px;
-  height: 500px;
   border: solid;
   border-width: 2px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  padding-bottom: 30px;
 `;
 
 const Title = styled.div`
