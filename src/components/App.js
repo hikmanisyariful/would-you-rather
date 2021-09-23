@@ -4,12 +4,18 @@ import { handleInitialData } from "../actions/shared";
 import Login from "./Login";
 import QuestionLists from "./QuestionLists";
 import styled from "styled-components";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from "react-router-dom";
 import Navbar from "./Navbar";
 import AddQuestion from "./AddQuestion";
 import Leaderboard from "./Leaderboard";
 import Polling from "./Polling";
 import LoadingBar from "react-redux-loading";
+import NotFound from "./NotFound";
 
 function PrivateRoute({ children, authedUser, ...rest }) {
   return (
@@ -38,31 +44,36 @@ class App extends Component {
           <LoadingBar />
           <Container>
             <Navbar />
-            <Route path="/" exact>
-              <Login />
-            </Route>
-            <PrivateRoute
-              exact
-              authedUser={this.props.authedUser}
-              path="/questions"
-            >
-              <QuestionLists />
-            </PrivateRoute>
-            <PrivateRoute
-              authedUser={this.props.authedUser}
-              path="/questions/:question_id"
-            >
-              <Polling />
-            </PrivateRoute>
-            <PrivateRoute authedUser={this.props.authedUser} path="/add">
-              <AddQuestion />
-            </PrivateRoute>
-            <PrivateRoute
-              authedUser={this.props.authedUser}
-              path="/leaderboard"
-            >
-              <Leaderboard />
-            </PrivateRoute>
+            <Switch>
+              <Route path="/" exact>
+                <Login />
+              </Route>
+              <PrivateRoute
+                authedUser={this.props.authedUser}
+                path="/questions"
+                exact
+              >
+                <QuestionLists />
+              </PrivateRoute>
+              <PrivateRoute
+                authedUser={this.props.authedUser}
+                path="/questions/:question_id"
+              >
+                <Polling />
+              </PrivateRoute>
+              <PrivateRoute authedUser={this.props.authedUser} path="/add">
+                <AddQuestion />
+              </PrivateRoute>
+              <PrivateRoute
+                authedUser={this.props.authedUser}
+                path="/leaderboard"
+              >
+                <Leaderboard />
+              </PrivateRoute>
+              <Route path="*">
+                <NotFound />
+              </Route>
+            </Switch>
           </Container>
         </Fragment>
       </Router>
